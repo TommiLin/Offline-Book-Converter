@@ -11,6 +11,12 @@ Offline Book Converter is a Windows app for converting ebooks and repairing thei
 
 Books without chapters are converted as continuous books. The app verifies that the output can be reopened and contains readable content. For books with a table of contents, it also verifies the navigation links.
 
+## Table of contents before and after
+
+| Before repair | After repair |
+| --- | --- |
+| ![Original table of contents with cascading indentation](docs/images/toc-before.png) | ![Repaired table of contents with readable entries and distinct group headings](docs/images/toc-after.png) |
+
 ## Installation
 
 Install **Python 3.10 or later with Tkinter** and **Calibre for Windows**, then download and run the setup EXE from [Releases](https://github.com/TommiLin/Offline-Book-Converter/releases).
