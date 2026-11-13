@@ -1,0 +1,6 @@
+TkinterDnD2 0.4.3 is bundled for safe drag-and-drop instead of the original
+ctypes Windows hooks. Its MIT license is included under
+vendor/tkinterdnd2-0.4.3.dist-info/LICENSE. tkdnd retains its original notices.
+https://pypi.org/project/tkinterdnd2/0.4.3/
+
+Python and Calibre are installed separately and are not bundled.

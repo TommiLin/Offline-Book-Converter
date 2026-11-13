@@ -1,0 +1,1 @@
+Version 1.3.6: 21 GUI/updater checks passed; engine tests run separately with Calibre. Official repository endpoint, foreign assets, checksums, truncated downloads, install confirmation, and empty-release UI covered. Conversion and installer behavior retained from 1.3.5.
