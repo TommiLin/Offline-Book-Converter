@@ -15,7 +15,7 @@ Books without chapters are converted as continuous books. The app verifies that 
 
 | Before repair | After repair |
 | --- | --- |
-| ![Original table of contents with cascading indentation](docs/images/toc-before.png) | ![Repaired table of contents with readable entries and distinct group headings](docs/images/toc-after.png) |
+| ![Original table of contents with cascading indentation](docs/images/toc-before.jpg) | ![Repaired table of contents with readable entries and distinct group headings](docs/images/toc-after.jpg) |
 
 ## Installation
 
