@@ -1,96 +1,45 @@
 # Offline Book Converter
 
-Завершение установки 1.3.6: отдельный экран успешной установки с флажком
-Launch Offline Book Converter (включён по умолчанию) и View quick guide
-(выключен). Кнопка Open app запускает программу и закрывает установщик.
-Если запуск выключить, кнопка меняется на Close setup. При отсутствии Python
-флажок запуска отключён, а установщик поясняет необходимость установить его.
+Offline Book Converter is a Windows app for converting ebooks and repairing their tables of contents. It can export MOBI 6 for the Kindle 4, as well as EPUB and AZW3.
 
-Исправление установщика 1.3.6: перед заменой файлов проверяется, не заняты ли
-они запущенным приложением. Если конвертер открыт, установка не начинается:
-показывается просьба закрыть его и кнопка Retry. Уже выполняемая конвертация
-принудительно не прерывается. После закрытия программы нажми Retry.
+## Features
 
-## Простая ветка 1.3.6
+- Opens MOBI, EPUB, FB2, AZW3, DOCX, HTML, TXT, RTF, LIT, and PDB files.
+- Removes cascading indentation from the table of contents, highlights group headings, and checks navigation links.
+- Supports drag and drop, batch conversion, a progress bar, and an elapsed-time display.
+- Saves each converted book in its own folder, with a report and log in the Diagnostics subfolder.
 
-Это версия 1.3.0 с исправлением конвертации книг без глав. В ней нет поиска
-Флибусты, онлайн-обложек, вкладок поиска/отправки и почтовых настроек.
-Сохранён простой интерфейс, прогресс, папки результатов и ручная проверка
-обновлений GitHub. Для перетаскивания сохранён безопасный TkDND вместо старых
-Windows-перехватчиков; новых функций это не добавляет.
+Books without chapters are converted as continuous books. The app verifies that the output can be reopened and contains readable content. For books with a table of contents, it also verifies the navigation links.
 
-Если структура книги не содержит пунктов оглавления, исправлять в ней нечего:
-книга конвертируется, новое HTML-оглавление не добавляется, проверяется
-возможность повторного открытия и наличие читаемого содержимого.
-Если оглавление есть, выполняется прежнее исправление и проверка всех его ссылок.
-Повреждённые документы и ссылки на отсутствующие главы по-прежнему считаются ошибкой.
+## Installation
 
-Причина ошибки 1.3.0: функция `fix_book` выбрасывала `ValueError`, когда в NCX
-не было `navPoint`. Затем проверка результата требовала Contents даже от книги,
-в которой оглавления нет. Исправлены обе ветки.
+Install **Python 3.10 or later with Tkinter** and **Calibre for Windows**, then download and run the setup EXE from [Releases](https://github.com/TommiLin/Offline-Book-Converter/releases).
 
-Проверено на том же MOBI со скриншота: старая версия воспроизводит ошибку,
-новая завершает конвертацию. Текст после распаковки совпадает с исходным
-при игнорировании пробельных символов. Тестовая смешанная очередь проходит 2/2.
-Пользовательские книги не входят в архив исходников.
+If setup asks you to close the converter, let any active conversion finish, close the app, and click **Retry**. After installation, you can open the app or view the quick guide from the setup window.
 
-Windows-приложение с английским интерфейсом для конвертации электронных книг и исправления оглавления, в том числе для Kindle 4.
+## Updates
 
-## Возможности
+Conversion works offline. Click **Check for updates** to look for a newer stable release in the official TommiLin/Offline-Book-Converter repository. The app asks before downloading the installer, verifies its SHA-256 checksum, and asks before opening setup.
 
-- MOBI, EPUB, FB2, AZW3, DOCX, HTML, TXT, RTF, LIT и PDB на входе.
-- MOBI 6 для Kindle 4, EPUB и AZW3 на выходе.
-- Читаемое оглавление без каскадных отступов; выделение групп и проверка ссылок.
-- Перетаскивание книг, очередь, прогресс и таймер.
-- Каждый результат в собственной папке; отчёт и журнал в `Diagnostics`.
-- Проверка и загрузка обновлений из публичного GitHub Releases.
+## Build from source
 
-Для работы нужны **Python 3.10+ с Tkinter** и **Calibre для Windows**. Они устанавливаются отдельно. Конвертация работает офлайн. Сеть используется только после нажатия **Check for updates**.
+Run these commands on Windows with Python and the .NET Framework 4.x compiler installed.
 
-## Как загрузить этот проект на GitHub
+    python app/app.pyw
+    python -m unittest discover -s tests -v
+    python scripts/build.py
 
-1. Используй публичный репозиторий https://github.com/TommiLin/Offline-Book-Converter.
-2. Распакуй архив и загрузи **его содержимое в корень репозитория**, включая `.github`, `.gitignore`, `app`, `scripts`, `installer`, `tests`. Файлы не должны оказаться внутри дополнительной вложенной папки.
-3. Открой **Actions → Build and release Windows app → Run workflow**. Это проверит проект и соберёт установщик, portable-версию и исходники. В конце появится артефакт **Windows-build**.
-4. Для выпуска первой версии создай и отправь тег `v1.3.6` (команды ниже). Сценарий сам опубликует полный GitHub Release со всеми файлами. Не публикуй пустой релиз заранее.
+The build writes the setup EXE, portable ZIP, source ZIP, and SHA256SUMS.txt to dist. See [BUILD.md](BUILD.md) for build and release details.
 
-```powershell
-git tag v1.3.6
-git push origin v1.3.6
-```
+## Publish a release
 
-Команды выполняются в локальной копии твоего репозитория после отправки файлов на GitHub. Если Git не используешь: скачай артефакт **Windows-build**, распакуй и вручную создай релиз с тегом `v1.3.6`, прикрепив **все четыре файла** из `dist` (EXE, portable ZIP, source ZIP, SHA256SUMS.txt). При ручной публикации предварительно дождись успешной сборки.
+1. Extract the source ZIP and upload its contents to the root of the official repository, including .github/workflows/release.yml.
+2. To build from the browser, open **Actions**, select **Build and release Windows app**, and click **Run workflow**. Download and extract the **Windows-build** artifact after the run succeeds.
+3. In **Releases**, create a stable release and attach the four build files. For version 1.3.6, use the tag v1.3.6. If the workflow is enabled, temporarily disable it during manual publication to avoid a second attempt to publish the same tag, then re-enable it.
+4. For later releases, update the version in app/update_config.json and record the changes in CHANGELOG.md. Keep the release tag and the app version in sync. Pushing a matching tag with Git triggers the automatic build and release workflow.
 
-Адрес обновлений закреплён в коде: **TommiLin/Offline-Book-Converter**. Кнопка **Check for updates** проверяет только его стабильные релизы. Настройка адреса удалена; старый settings.json игнорируется. Пока релизов нет, показывается информационное уведомление. Токены и пароли пользователю не нужны.
+The updater needs the versioned setup EXE and its matching SHA256SUMS.txt from the same build.
 
-## Как выпустить следующее обновление
+## License
 
-1. Внеси изменения.
-2. Измени `version` в `app/update_config.json`, например на `1.3.6`.
-3. Обнови `CHANGELOG.md`, отправь изменения в GitHub.
-4. Создай и отправь тег **с той же версией**, например `v1.3.6`.
-5. Дождись успешного выполнения Actions и опубликованного релиза.
-
-Установленные приложения найдут новую версию по кнопке **Check for updates**. Программа сравнит числовые версии, скачает EXE, сверит SHA-256 и предложит открыть установщик в папке текущей установки. После подтверждения приложение закроется; в установщике нужно нажать **Install**. Настройки и книги сохраняются. Автоматической проверки при запуске нет.
-
-## Локальный запуск и сборка
-
-```powershell
-python app/app.pyw
-python -m unittest discover -s tests -v
-python scripts/build.py
-```
-
-В последней команде замени `YOUR_NAME/YOUR_REPOSITORY` на свой адрес. Для сборки нужны Windows, Python и встроенный компилятор .NET Framework 4.x; пакеты pip не требуются. Calibre нужен для конвертации, но не для сборки и тестов обновления. Подробности — в [BUILD.md](BUILD.md).
-
-## Структура
-
-- `app/` — интерфейс, конвертер, drag-and-drop, модуль обновлений и иконка.
-- `installer/Launcher.cs` — исходник EXE-запускателя и установщика.
-- `scripts/build.py` — создание установщика, portable ZIP, source ZIP и SHA-256.
-- `.github/workflows/release.yml` — сборка и публикация.
-- `tests/` — проверки версий, загрузки, контрольных сумм и обработки ошибок.
-
-Публичные стабильные релизы должны использовать теги `vMAJOR.MINOR.PATCH`. Приложение пропускает draft/prerelease. Закрытые репозитории и авторизация не поддерживаются. Установщик не содержит Python и Calibre.
-
-Протокол обновления использует [GitHub Releases API](https://docs.github.com/en/rest/releases/releases) и `SHA256SUMS.txt`, создаваемый сборкой. Лицензия исходников — MIT; лицензии Python и Calibre действуют отдельно. Пользовательские книги в репозиторий не включены.
+The source code is available under the [MIT License](LICENSE).
